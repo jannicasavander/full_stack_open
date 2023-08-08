@@ -5,7 +5,7 @@
 
         browser ->> server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
         activate server
-        server-->> browser
+        server-->> browser;
         deactivate server
 
         Note right of browser: Redirect to "notes" after the data has been posted to the server
