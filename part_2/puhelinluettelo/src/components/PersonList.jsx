@@ -2,16 +2,23 @@ const PersonList = props => {
     return (
         <div>
             {props.persons.map(person => (
-                <SinglePerson key={person.name} person={person} />
+                <SinglePerson
+                    key={person.name}
+                    person={person}
+                    handlePersonDelete={() =>
+                        props.handlePersonDelete(person.id)
+                    }
+                />
             ))}
         </div>
     );
 };
 
-const SinglePerson = ({ person }) => {
+const SinglePerson = props => {
     return (
         <p>
-            {person.name} {person.number}
+            {props.person.name} {props.person.number}
+            <button onClick={props.handlePersonDelete}>delete</button>
         </p>
     );
 };
