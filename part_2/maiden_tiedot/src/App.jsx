@@ -18,7 +18,7 @@ const App = () => {
     };
 
     const countriesToShow = countries.filter(countries =>
-        countries.name.common.toLowerCase().startsWith(newFilter.toLowerCase()),
+        countries.name.common.toLowerCase().includes(newFilter.toLowerCase()),
     );
 
     return (
@@ -27,7 +27,10 @@ const App = () => {
                 filter={newFilter}
                 handleFilterChange={handleFilterChange}
             />
-            <CountryList countries={countriesToShow} />
+            <CountryList
+                countries={countriesToShow}
+                setCountryFilter={setNewFilter}
+            />
         </div>
     );
 };

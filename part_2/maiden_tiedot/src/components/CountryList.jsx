@@ -10,6 +10,9 @@ const CountryList = props => {
                     <CountryListElement
                         key={country.name.common}
                         country={country}
+                        setCountryFilter={() =>
+                            props.setCountryFilter(country.name.common)
+                        }
                     />
                 ))
             )}
@@ -17,8 +20,13 @@ const CountryList = props => {
     );
 };
 
-const CountryListElement = ({ country }) => {
-    return <p>{country.name.common}</p>;
+const CountryListElement = ({ country, setCountryFilter }) => {
+    return (
+        <div>
+            {country.name.common + " "}
+            <button onClick={setCountryFilter}>Show</button>
+        </div>
+    );
 };
 
 const SingleCountry = ({ country }) => {
@@ -26,7 +34,7 @@ const SingleCountry = ({ country }) => {
         <p>
             <h2>{country.name.common}</h2>
             <p>capital {country.capital[0]}</p>
-            <p>population {country.population}</p>
+            <p>area {country.area}</p>
             <h3>languages</h3>
             <ul>
                 {Object.values(country.languages).map(language => (
