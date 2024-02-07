@@ -1,8 +1,14 @@
+import React, { useEffect } from "react";
+
 const CountryList = props => {
     return (
         <div>
             {props.countries.length === 1 ? (
-                <SingleCountry country={props.countries[0]} />
+                <SingleCountry
+                    country={props.countries[0]}
+                    weather={props.weather}
+                    fetchWeatherData={props.getWeather}
+                />
             ) : props.countries.length > 10 ? (
                 <p>Too many matches, specify another filter</p>
             ) : (
@@ -29,7 +35,13 @@ const CountryListElement = ({ country, setCountryFilter }) => {
     );
 };
 
-const SingleCountry = ({ country }) => {
+const SingleCountry = ({ country, weather, fetchWeatherData }) => {
+    useEffect(() => {
+        fetchWeatherData(country.capital[0], country.cca2);
+    }, [country]);
+
+    const iconUrl = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`;
+
     return (
         <p>
             <h2>{country.name.common}</h2>
@@ -46,6 +58,16 @@ const SingleCountry = ({ country }) => {
                 alt={`Flag of ${country.name.common}`}
                 width="200"
             />
+            <h3>Weather in {country.capital[0]}</h3>
+            <p>
+                <strong>temperature</strong> {weather.temp} Celsius
+            </p>
+            <p>
+                <img src={iconUrl} alt="Weather icon" />
+            </p>
+            <p>
+                <strong>wind</strong> {weather.windSpeed} m/s
+            </p>
         </p>
     );
 };
