@@ -83,9 +83,16 @@ const App = () => {
         if (person) {
             handlePersonUpdate(person.id, personObject);
         } else {
-            personsService.create(personObject).then(returnedPerson => {
-                setPersons(persons.concat(returnedPerson));
-            });
+            personsService
+                .create(personObject)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson));
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    setNotificationMessage(error.response.data.error);
+                    setIsError(true);
+                });
             setNotificationMessage(`Added ${personObject.name}`);
             setTimeout(() => {
                 setNotificationMessage(null);
