@@ -61,12 +61,14 @@ const App = () => {
                     );
                 })
                 .catch(error => {
+                    console.log(error.response.data);
                     setNotificationMessage(
-                        `Person '${personObject.name}' has already been removed from the server`,
+                        error.response.data.error || "Error updating person",
                     );
                     setIsError(true);
                     setTimeout(() => {
                         setNotificationMessage(null);
+                        setIsError(false);
                     }, 5000);
                     setPersons(persons.filter(n => n.id !== id));
                 });
@@ -96,14 +98,17 @@ const App = () => {
             setNotificationMessage(`Added ${personObject.name}`);
             setTimeout(() => {
                 setNotificationMessage(null);
+                setIsError(false);
             }, 5000);
         }
         setNewName("");
         setNewNumber("");
     };
 
-    const personsToShow = persons.filter(person =>
-        person.name.toLowerCase().includes(newFilter.toLowerCase()),
+    const personsToShow = persons.filter(
+        person =>
+            person &&
+            person.name.toLowerCase().includes(newFilter.toLowerCase()),
     );
 
     return (
